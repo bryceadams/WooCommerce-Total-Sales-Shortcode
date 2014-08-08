@@ -39,7 +39,7 @@ class WCTSS {
 	/**
 	 * Start the Class when called
 	 *
-	 * @package WooCommerce Breadcrumb Permalinks
+	 * @package  WooCommerce Total Sales Shortcode
 	 * @author  Captain Theme <info@captaintheme.com>
 	 * @since   1.0.0
 	 */

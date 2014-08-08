@@ -1,9 +1,9 @@
 === Plugin Name ===
-Contributors: WooCommerce Total Sales Shortcode
+Contributors: captaintheme
 Donate link: http://captaintheme.com
 Tags: woocommerce, total sales, sales, sales shortcode, total sales shortcode, percent of sales, show total sales, show sales
 Requires at least: 3.8.0
-Tested up to: 3.9.1
+Tested up to: 3.9.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -34,15 +34,11 @@ The shortcode has three optional attributes:
 
 **So for example:**
 
-```
-[wctss_total_sales percent="50" before="€" after=" Donated to My Comic Book Collection!"]
-```
+`[wctss_total_sales percent="50" before="€" after=" Donated to My Comic Book Collection!”]`
 
 **Would display:**
 
-```
-€5,250.42 Donated to My Comic Book Collection!
-```
+`€5,250.42 Donated to My Comic Book Collection!`
 
 Awesome! Right? I hope so...
 
