@@ -1,15 +1,4 @@
 <?php
-/**
- * WooCommerce Total Sales Shortcode Class
- *
- * @package   WooCommerce Total Sales Shortcode
- * @author    Captain Theme <info@captaintheme.com>
- * @license   GPL-2.0+
- * @link      http://captaintheme.com
- * @copyright 2014 Captain Theme
- * @since     1.0.0
- */
-
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
@@ -18,13 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * WCBP Class
  *
  * @package  WooCommerce Total Sales Shortcode
- * @author   Captain Theme <info@captaintheme.com>
- * @since    1.0.0
+ * @since    1.1.0
  */
 
 class WCTSS {
 
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 
 	protected $plugin_slug = 'woocommerce-total-sales-shortcode';
 
@@ -33,6 +21,7 @@ class WCTSS {
 	private function __construct() {
 
 		add_shortcode( 'wctss_total_sales', array( $this, 'wctss_total_sales_shortcode' ) );
+		add_shortcode( 'wctss_total_orders', array( $this, 'wctss_total_orders_shortcode' ) );
 
 	}
 
@@ -40,7 +29,6 @@ class WCTSS {
 	 * Start the Class when called
 	 *
 	 * @package  WooCommerce Total Sales Shortcode
-	 * @author  Captain Theme <info@captaintheme.com>
 	 * @since   1.0.0
 	 */
 
@@ -55,13 +43,30 @@ class WCTSS {
 
 	}
 
+	/**
+	 * Get Total Orders.
+	 * 
+	 * @package WooCommerce Total Sales Shortcode
+	 * @since   1.1.0
+	 */
+	public function wctss_get_total_orders() {
+		$count_orders = (array) wp_count_posts( 'shop_order' );
+		$statuses = apply_filters( 'woocommerce_reports_order_statuses', array( 'completed', 'processing', 'on-hold' ) );
+
+		$total = 0;
+		foreach( $statuses as $status ) {
+			$total+= $count_orders['wc-' . $status];
+		}
+
+		return $total;
+	}
+
 
     /**
-	 * Get Total Sales
+	 * Get Total Sales.
 	 *
 	 * @package WooCommerce Total Sales Shortcode
-	 * @author  Captain Theme <info@captaintheme.com>
-	 * @since   1.0.0
+	 * @since   1.1.0
 	 */
 
 	public function wctss_get_total_sales() {
@@ -78,9 +83,7 @@ class WCTSS {
 
 	        WHERE   meta.meta_key       = '_order_total'
 	        AND     posts.post_type     = 'shop_order'
-	        AND     posts.post_status   = 'publish'
-	        AND     tax.taxonomy        = 'shop_order_status'
-	        AND     term.slug           IN ('" . implode( "','", apply_filters( 'woocommerce_reports_order_statuses', array( 'completed', 'processing', 'on-hold' ) ) ) . "')
+	        AND     posts.post_status   IN ( 'wc-" . implode( "','wc-", apply_filters( 'woocommerce_reports_order_statuses', array( 'completed', 'processing', 'on-hold' ) ) ) . "' )
 	    " ) );
 
 	    return $order_totals->total_sales;
@@ -91,7 +94,6 @@ class WCTSS {
 	 * Render Total Sales
 	 *
 	 * @package WooCommerce Total Sales Shortcode
-	 * @author  Captain Theme <info@captaintheme.com>
 	 * @since   1.0.0
 	 */
 
@@ -123,7 +125,6 @@ class WCTSS {
 	 * Total Sales Shortcode
 	 *
 	 * @package WooCommerce Total Sales Shortcode
-	 * @author  Captain Theme <info@captaintheme.com>
 	 * @since   1.0.0
 	 */
 
@@ -137,6 +138,18 @@ class WCTSS {
 
       	return $this->wctss_render_total_sales( $a['percent'], $a['before'], $a['after'] );
 
+	}
+
+	/**
+	 * Total Orders Shortcode.
+	 * 
+	 * @package WooCommerce Total Sales Shortcode
+	 * @since   1.1.0
+	 */
+	public function wctss_total_orders_shortcode() {
+		$total_orders = $this->wctss_get_total_orders();
+
+		return number_format( $total_orders );
 	}
 
 }

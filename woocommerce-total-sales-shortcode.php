@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: WooCommerce Total Sales Shortcode
- * Plugin URI: http://captaintheme.com/
+ * Plugin URI: http://bryceadams.com/
  * Description: Easily show off the total amount of sales your WC store has made, or a percent of those sales, in a shortcode.
- * Version: 1.0.0
- * Author: Captain Theme
- * Author URI: http://captaintheme.com/
+ * Version: 1.1.0
+ * Author: Bryce Adams
+ * Author URI: http://bryceadams.com/
  * License: GPL2
  */
 
